@@ -240,3 +240,6 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+/aspdotnetcore-web-application-building
+/src/BethanyPieShop/wwwroot/lib
+/aspdotnetcore-web-application-building.zip
