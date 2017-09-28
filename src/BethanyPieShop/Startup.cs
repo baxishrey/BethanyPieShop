@@ -34,6 +34,12 @@ namespace BethanyPieShop
             services.AddTransient<IPieRepository, PieRepository>();
             services.AddTransient<ICategoryRepository, CategoryRepository>();
 
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped(sp => ShoppingCart.GetCart(sp));
+
+            services.AddMemoryCache();
+            services.AddSession();
+
             services.AddMvc();
         }
 
@@ -45,6 +51,7 @@ namespace BethanyPieShop
 
             app.UseStatusCodePages();
             app.UseStaticFiles();
+            app.UseSession();
             app.UseMvcWithDefaultRoute();
 
             DbInitializer.Seed(app);
