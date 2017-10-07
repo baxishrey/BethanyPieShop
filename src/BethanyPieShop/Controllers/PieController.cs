@@ -21,14 +21,42 @@ namespace BethanyPieShop.Controllers
             _pieRepository = pieRepository;
         }
 
-        public ViewResult List()
+        public ViewResult List(string category)
         {
-            PiesListViewModel piesListViewModel = new PiesListViewModel
+            IEnumerable<Pie> pies;
+            string currentCategory = string.Empty;
+
+            if (string.IsNullOrEmpty(category))
             {
-                Pies = _pieRepository.Pies,
-                CurrentCategory = "Cheese Cakes"
-            };
-            return View(piesListViewModel);
+                pies = _pieRepository.Pies.OrderBy(p => p.PieId);
+                currentCategory = "All pies";
+            }
+            else
+            {
+                
+                pies = _pieRepository.Pies.Where(p => string.Equals(p.Category.CategoryName, category, StringComparison.OrdinalIgnoreCase))
+                   .OrderBy(p => p.PieId);
+                Category pieCategory = _categoryRepository.Categories.FirstOrDefault(c => string.Equals(c.CategoryName, category, StringComparison.OrdinalIgnoreCase));
+                currentCategory = pieCategory != null ? pieCategory.CategoryName : "All pies";
+            }
+
+            return View(new PiesListViewModel
+            {
+                Pies = pies,
+                CurrentCategory = currentCategory
+            });
+        }
+
+        public IActionResult Details(int id)
+        {
+            var pie = _pieRepository.GetPieById(id);
+
+            if(pie == null)
+            {
+                return NotFound();
+            }
+
+            return View(pie);
         }
     }
 }
