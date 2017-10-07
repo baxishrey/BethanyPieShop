@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using BethanyPieShop.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
+using BethanyPieShop.Controllers;
 
 namespace BethanyPieShop
 {
@@ -37,6 +38,7 @@ namespace BethanyPieShop
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped(sp => ShoppingCart.GetCart(sp));
+            //services.AddScoped(sp => PieDataController.GetLoadedPiesCount(sp));
             
             services.AddMemoryCache();
             services.AddSession();
