@@ -1,4 +1,12 @@
-﻿<div id="pieDiv">
+﻿@model PiesListViewModel
+
+@ViewBag.CurrentCategory
+@foreach (var pie in Model.Pies)
+{
+    @Html.Partial("PieOverviewSummary", pie)
+}
+
+@*<div id="pieDiv">
 
 </div>
 
@@ -62,4 +70,4 @@
             return false;
         }
     </script>
-}
+}*@
