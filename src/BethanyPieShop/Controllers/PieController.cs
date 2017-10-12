@@ -22,7 +22,7 @@ namespace BethanyPieShop.Controllers
         }
 
         public ViewResult List(string category)
-        {
+        {            
             IEnumerable<Pie> pies;
             string currentCategory = string.Empty;
 

@@ -23,7 +23,8 @@ namespace BethanyPieShop
         {
             _configurationRoot = new ConfigurationBuilder()
                 .SetBasePath(hostingEnvironment.ContentRootPath)
-                .AddJsonFile("appsettings.json")
+                //.AddJsonFile("appsettings.json")
+                .AddJsonFile($"appsettings.{hostingEnvironment.EnvironmentName}.json", true)
                 .Build();
         }
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -54,9 +55,17 @@ namespace BethanyPieShop
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
 
-            app.UseDeveloperExceptionPage();
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
 
-            app.UseStatusCodePages();
+                app.UseStatusCodePages(); 
+            }
+            else
+            {
+                app.UseExceptionHandler("/AppException");
+            }
+
             app.UseStaticFiles();
             app.UseSession();
             app.UseIdentity();
